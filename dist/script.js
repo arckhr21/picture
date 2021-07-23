@@ -993,28 +993,39 @@ var modals = function modals() {
         document.body.style.marginRight = "0px";
       }
     });
+  }
 
-    function showModalbyTime(selector, time) {
-      setTimeout(function () {
-        document.querySelector(selector).stile.display = 'block';
-        document.body.style.overflow = 'hidden';
-      }, time);
-    }
+  function showModalByTime(selector, time) {
+    setTimeout(function () {
+      var display;
+      document.querySelectorAll('[data-modal]').forEach(function (item) {
+        if (getComputedStyle(item).display !== 'none') {
+          display = "block";
+        }
+      });
 
-    function calcScroll() {
-      var div = document.createElement('div');
-      div.style.width = '50px';
-      div.style.height = '50px';
-      div.style.overflowY = 'scroll';
-      div.style.visibility = 'hidden';
-      document.body.appendChild(div);
-      var scrollWidth = div.offsetWidth - div.clientWidth;
-      div.remove();
-      return scrollWidth;
-    }
+      if (!display) {
+        document.querySelector(selector).style.display = 'block';
+        document.body.style.overflow = "hidden";
+      }
+    }, time);
+  }
+
+  function calcScroll() {
+    var div = document.createElement('div');
+    div.style.width = '50px';
+    div.style.height = '50px';
+    div.style.overflowY = 'scroll';
+    div.style.visibility = 'hidden';
+    document.body.appendChild(div);
+    var scrollWidth = div.offsetWidth - div.clientWidth;
+    div.remove();
+    return scrollWidth;
   }
 
   bindModal('.button-design', '.popup-design', '.popup-design .popup-close');
+  bindModal('.button-consultation', '.popup-consultation', '.popup-consultation .popup-close');
+  showModalByTime('.popup-consultation', 5000);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (modals);
